@@ -4,27 +4,119 @@
   <head>
     <meta charset="UTF-8" />
     <title>Hello React</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
+
+    <style>
+      
+      #content {
+      
+      margin: auto;
+      border:3px solid #8AC007;
+      width: 650px;
+      padding: 10px;
+      
+      }
+
+      .comment:hover {
+      border:3px solid #00FFFF;
+      }
+      p,h1 {
+      font-family: 'Roboto', sans-serif;
+      margin: auto;
+      padding: 20px;
+      width: 80%;
+    </style>
   </head>
   <body>
+    <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
+    <p>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ullamcorper consequat sem a scelerisque. Aliquam erat volutpat. Integer condimentum ullamcorper nunc id mattis. Duis eu lobortis velit. Integer dapibus dui libero, scelerisque laoreet mauris suscipit in. Maecenas tempor purus non justo euismod, eget bibendum arcu volutpat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus ut purus ultricies, aliquet enim non, interdum leo. Etiam nec aliquet nisi. Sed euismod volutpat ante, et sollicitudin nibh scelerisque nec.</p>
+<p>
+Proin tincidunt sagittis mi ut tincidunt. Morbi nec lacus sodales, facilisis turpis in, tempus quam. Aenean dictum scelerisque est ut scelerisque. In hac habitasse platea dictumst. Curabitur ultricies pharetra nibh, ut faucibus ante placerat ut. Mauris vel tellus dolor. Nam ut imperdiet dolor. Donec id ultrices ex, sit amet dapibus mauris. Proin dictum gravida sapien, vel semper tortor. Sed libero massa, viverra eu augue ac, molestie dapibus lectus. Phasellus faucibus nulla vel enim iaculis, quis imperdiet leo dictum. Maecenas eu massa at dolor mattis dictum. Nulla congue purus sed augue sagittis, et malesuada turpis bibendum.</p>
+<p>
+Nam maximus euismod ipsum, sed efficitur sem venenatis vitae. Cras ullamcorper mattis nulla at feugiat. Maecenas sagittis justo leo, ut convallis orci hendrerit eget. Vestibulum vel nunc facilisis, tincidunt arcu ut, varius lacus. Nam at diam magna. Maecenas facilisis dapibus iaculis. Aliquam erat volutpat. Morbi condimentum, diam ut tincidunt mollis, nibh orci malesuada sapien, vitae porta est turpis et purus. Duis viverra lacus ac felis dignissim, quis sodales nunc faucibus. Integer et mollis dolor.</p>
+<p>
+In rhoncus est imperdiet, tempus justo id, eleifend risus. Nulla eget urna et ex dignissim auctor. Vestibulum finibus sollicitudin nulla vel iaculis. Cras ut dapibus augue, vitae porta odio. In commodo nulla eget congue aliquam. Ut pharetra sagittis ex, eget sollicitudin odio. Aenean ultrices arcu non posuere posuere. Vestibulum mollis placerat pulvinar.</p>
+<p>
+Nam vulputate erat ante, et sodales justo fermentum vitae. Donec consequat magna at ante scelerisque, in sollicitudin felis scelerisque. Integer at massa ultrices, feugiat tortor a, varius lectus. Nulla et mattis nisi. Cras dictum metus sed arcu tempor ultricies. Sed dapibus libero non mi faucibus, in pellentesque elit varius. Praesent in hendrerit ligula. Nunc neque nunc, accumsan eu erat a, malesuada scelerisque diam. Aenean at metus hendrerit, dignissim dui pellentesque, elementum mauris. Sed molestie risus sit amet efficitur congue. Fusce euismod pretium magna, tempor pulvinar nulla facilisis id. Praesent ultricies quis neque vel sagittis. Nulla suscipit non nisl et ullamcorper. Phasellus mi risus, laoreet in urna eget, condimentum malesuada diam. Sed congue, velit id commodo tempus, elit risus vulputate nisl, vel dictum elit nisl id tortor. </p>
     <div id="content"></div>
     <script type="text/jsx">
-    var CommentBox = React.createClass({
-	    render: function() {
-		    return (
-			    <div className="commentBox">
-				    Hello, I'm a comment Box.
-			    </div>
-		    );
-	    }
-});
-    React.render(
-	    <commentBox />,
-	    document.getElementById('content')
-    );
-    
+      var CommentBox = React.createClass({displayName: 'CommentBox',
+      render: function() {
+      return (
+      <div className="commentBox">
+	<h1>Comments</h1>
+	<CommentList data={this.props.data} />
+	<CommentForm />
+      </div>
+      );
+      }
+      });
+
+      var CommentList = React.createClass({
+      render: function() {
+      var commentNodes = this.props.data.map(function (comment) {
+      return (
+      <Comment author={comment.author}>
+	{comment.text}
+      </Comment>
+      );
+      });
+      return (
+      <div className="commentList">
+	{commentNodes}
+      </div>
+      );
+      }
+      });
+
+      var CommentForm = React.createClass({
+      render: function(){
+      return (
+      <div className="commentForm">
+	Hello World! Comment Form.
+      </div>
+      );
+      }
+      });
+
+      var Comment = React.createClass({
+      render: function(){
+      var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
+      return (
+      <div className="comment">
+	<h2 className="commentAuthor">
+	  {this.props.author}
+	</h2>
+	<span dangerouslySetInnerHTML={{__html: rawMarkup}} />
+      </div>
+      );
+      }
+      });
+
+      var data = [
+
+      {author: "Pete Hunt", text: "Lorem ipsum dolor sit *amet, consectetur adipiscing elit. In lobortis* urna quis aliquam aliquam. Donec ut varius est, eget facilisis diam. Curabitur ultricies mollis nibh, auctor convallis massa euismod at. Aliquam odio ligula, lobortis nec orci quis, elementum cursus tortor. Integer tempor sce"},
+      
+      {author: "Jordan Walke", text: "lerisque convallis. Donec ac sapien risus. Morbi in augue vel nunc feugiat ornare. Maecenas et auctor urna. Vestibulum molestie lacus sem, gravida pellentesque null*a molestie non. Aliquam vehicula lig*ula ut volutpat auctor. Nulla est erat, ultrices in tellus et, congue molestie neque. Vivamus et egestas tortor. Cras suscipit dolor eu rutrum vulputate. Sed convallis metus ac aliquam convallis. Vivamus hendrerit laoreet ultricies. Nam in risus elit. "},
+      
+      {author: "John Peter", text: "Nulla dolor dolor, tempus quis* suscipit at, facilisis quis lorem.* Aliquam erat volutpat. Donec vel faucibus neque, sit amet commodo tellus. Aenean vel nisi aliquet, volutpat nibh at, ornare nibh. Suspendisse mollis maximus sem, a sollicitudin lorem sagittis ac. Aenean porta congue odio quis ornare. Nunc enim erat, pretium vitae porta id, tempus sit amet ipsum. Curabitur commodo diam quis tristique blandit. Vestibulum nec"},
+      
+      {author: "Jonny Sams", text: " ex placerat, tem*por ex eget, elementum tellus. Aenean *nibh diam, egestas sit amet facilisis id, tempor id felis. In imperdiet nisl vitae purus mattis, eu gravida lectus volutpat. Suspendisse egestas ut magna nec tincidunt. Proin consequat luctus ante, at aliquet nulla tincidunt ut. Aliquam sit amet consectetur lacus. Mauris a consectetur odio."}
+
+      ];
+      
+      React.render(
+      <CommentBox data={data}/>,
+      document.getElementById('content')
+      );
     </script>
   </body>
 </html>

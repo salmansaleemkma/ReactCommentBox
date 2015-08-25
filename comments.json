@@ -1,23 +1,26 @@
 [
     {
-	"author": "Samree ayesha",
-	"text": "text text text text textWOOO HOOOOO!"
+        "text": "Hey there!",
+        "author": "Sams"
     },
     {
-	"author": "Salman Saleem",
-	"text": "WOOO HOOOOO!"
+        "text": "React is *great*!",
+        "author": "Paul O\u2019Shannessy"
     },
     {
-        "author": "Sams",
-        "text": "Hey there!"
+        "text": "This is cool dude!",
+        "author": "Jonny sams"
     },
     {
-        "author": "Paul O’Shannessy",
-        "text": "React is *great*!"
+        "text": "testing testing",
+        "author": "sam"
     },
     {
-	"author": "Jonny sams",
-	"text": "This is cool dude!"
+        "text": "testing testing",
+        "author": "sams testing"
+    },
+    {
+        "text": "Haha *ha he he he* hahahah",
+        "author": "sams"
     }
-    
 ]
